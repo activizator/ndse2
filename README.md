@@ -13,7 +13,7 @@ interface Book {
 }
 
 2. Включите строгий режим "strict" в опциях компилятора, а параметр strictNullChecks выключите.
-
+https://github.com/activizator/ndse2/blob/main/tsconfig.json
 
 3. Напишите class "BooksRepository" к разрабатываемому приложению "библиотека" первого модуля.
-
+https://github.com/activizator/ndse2/blob/main/src/app.ts
