@@ -1,5 +1,8 @@
-interface Book {
+interface IBookId {
     id: string;
+}
+
+interface IBook extends IBookId {
     title?: string;
     description?: string;
     authors?: string;
@@ -8,7 +11,8 @@ interface Book {
     fileName?: string;
 }
 
-abstract class Books implements Book {
+class BooksRepository implements IBook {
+
     id: string;
     title?: string;
     description?: string;
@@ -16,7 +20,6 @@ abstract class Books implements Book {
     favorite?: string;
     fileCover?: string;
     fileName?: string;
-    book?: {id: string, title: string, description: string, authors: string, favorite: string, fileCover: string, fileName: string};
 
     constructor(id: string, title?: string, description?: string, authors?: string, favorite?: string, fileCover?: string, fileName?: string) {
         this.id = id;
@@ -26,43 +29,31 @@ abstract class Books implements Book {
         this.favorite = favorite;
         this.fileCover = fileCover;
         this.fileName = fileName;
-        this.book = {id, title, description, authors, favorite, fileCover, fileName};
-    }
-}
-
-class BooksRepository extends Books {
-
-    id: string;
-    title?: string;
-    description?: string;
-    authors?: string;
-    favorite?: string;
-    fileCover?: string;
-    fileName?: string;
-    book?: {id: string, title: string, description: string, authors: string, favorite: string, fileCover: string, fileName: string};
-
-    constructor(id: string, title?: string, description?: string, authors?: string, favorite?: string, fileCover?: string, fileName?: string) {
-        super(id, title, description, authors, favorite, fileCover, fileName);
     }
     
-    createBook(): void {
-        console.log("Создана книга: " + JSON.stringify(this.book));
+    createBook(): IBook {
+        const book = {id: this.id, title: this.title, description: this.description, authors: this.authors, favorite: this.favorite, fileCover: this.fileCover, fileName: this.fileName}
+        console.log("Создана книга: " + JSON.stringify(book));
+        return book;
     }
     
-    getBook(): void {
-        console.log("Информация о книге:" + this.id);
+    getBook(): IBookId {
+        console.log("Информация о книге: " + JSON.stringify({id: this.id}));
+        return {id: this.id};
     }
     
     getBooks(): void {
         console.log("Информация обо всех книгах");
     }
     
-    updateBook(): void {
-        console.log("Обновлена информация о книге:" + this.id);
+    updateBook(): IBookId {
+        console.log("Обновлена информация о книге: " + JSON.stringify({id: this.id}));
+        return {id: this.id};
     }
     
-    deleteBook(): void {
-        console.log("Удалена книга:" + this.id);
+    deleteBook(): IBookId {
+        console.log("Удалена книга: " + JSON.stringify({id: this.id}));
+        return {id: this.id};
     }
 }
 
