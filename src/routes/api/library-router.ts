@@ -1,30 +1,30 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
-const path = require('path');
-const { BookSchema } = require('../../models');
-const fileMiddleware = require('../../middleware/uploader');
-const multer = require('multer');
+import path from 'path';
+import { BookSchema } from '../../models/bookschema';
+import { fileMiddleware } from '../../middleware/uploader';
+import multer from 'multer';
 const formParser = multer();
 
-const { container } = require('../../container');
-const { BooksRepository } = require('../../booksrepository');
+import { container } from '../../container';
+import { BooksRepository } from '../../booksrepository';
 
 router.get('/books/', (req, res) => {
-    // const books = await BookSchema.find().select('-__v');
-
     const repo = container.get(BooksRepository);
     const books = repo.getBooks();
     res.json(books);
 });
 
-router.get('/books/:id', async (req, res) => {
+
+
+router.get('/:id', async (req, res) => {
     const { id } = req.params;
 
     try {
         const book = await BookSchema.findById(id).select('-__v');
         if (!book) { throw new Error('not found'); };
 
-            res.json({ ...book._doc, counter });
+            res.json({ ...book });
 
     } catch (error) {
         console.error(error);
@@ -32,7 +32,7 @@ router.get('/books/:id', async (req, res) => {
     };
 });
 
-router.post('/books/', formParser.single('body'), async (req, res) => {
+router.post('/book/', formParser.single('body'), async (req, res) => {
     const { title, description, authors, favorite, fileCover, fileName } = req.body;
 
     const newBook = new BookSchema({ title, description, authors, favorite, fileCover, fileName });

@@ -5,6 +5,6 @@ import { BooksRepository } from "./booksrepository";
 
 const container = new Container();
 
-container.bind(BooksRepository).toSelf();
+container.bind(BooksRepository).toSelf().inSingletonScope;
 
 export { container };

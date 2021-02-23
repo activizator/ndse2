@@ -1,12 +1,14 @@
 #!/usr/bin/env node
 
-require('dotenv').config();
+import dotenv from 'dotenv';
+dotenv.config();
 
-const express = require('express');
-const bodyParser = require('body-parser');
-const path = require('path');
-const cors = require('cors');
-const mongoose = require('mongoose');
+import express from 'express';
+import bodyParser from'body-parser';
+import path from 'path';
+import cors from 'cors';
+import mongoose from'mongoose';
+
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
