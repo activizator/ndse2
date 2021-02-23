@@ -6,8 +6,8 @@ const fileMiddleware = require('../../middleware/uploader');
 const multer = require('multer');
 const formParser = multer();
 
-const { container } = require('../../ts/container');
-const { BooksRepository } = require('../../ts/booksrepository');
+const { container } = require('../../container');
+const { BooksRepository } = require('../../booksrepository');
 
 router.get('/books/', (req, res) => {
     // const books = await BookSchema.find().select('-__v');
@@ -45,7 +45,7 @@ router.post('/books/', formParser.single('body'), async (req, res) => {
     }
 });
 
-router.put('/books/:id', formParser.single('body'), async (req, res) => {
+router.put('/:id', formParser.single('body'), async (req, res) => {
     const { title, description, authors, favorite, fileCover, fileName } = req.body;
     const { id } = req.params;
 
@@ -58,7 +58,7 @@ router.put('/books/:id', formParser.single('body'), async (req, res) => {
     }
 });
 
-router.delete('/books/:id', async (req, res) => {
+router.delete('/:id', async (req, res) => {
     const { id } = req.params;
 
     try {
@@ -70,7 +70,7 @@ router.delete('/books/:id', async (req, res) => {
     }
 });
 
-router.post('/books/:id/upload-book', fileMiddleware.single('book-file'), (req, res) => {
+router.post('/:id/upload-book', fileMiddleware.single('book-file'), (req, res) => {
     if (req.file) {
         const { path } = req.file;
         res.json(path);
@@ -79,7 +79,7 @@ router.post('/books/:id/upload-book', fileMiddleware.single('book-file'), (req, 
     }
 });
 
-router.get('/books/:id/download-book', (req, res) => {
+router.get('/:id/download-book', (req, res) => {
     const { id } = req.params;
     res.download(path.join('./books', `${id}.txt`), `${id}.txt`, err => {
         if (err) {

@@ -4,9 +4,9 @@
   "description": "dz",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "node dist/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon index.js"
+    "dev": "nodemon dist/index.js"
   },
   "repository": {
     "type": "git",
@@ -22,21 +22,14 @@
   },
   "homepage": "",
   "dependencies": {
-    "axios": "^0.21.0",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
-    "D": "^1.0.0",
     "dotenv": "^8.2.0",
-    "ejs": "^3.1.5",
     "express": "^4.17.1",
-    "express-session": "^1.17.1",
-    "mongoose": "^5.11.8",
+    "mongoose": "^5.11.17",
     "multer": "^1.4.2",
     "node-unique-id-generator": "^0.1.0",
-    "nodemon": "^2.0.6",
-    "passport": "^0.4.1",
-    "passport-local": "^1.0.0",
-    "socket.io": "^3.0.4"
+    "nodemon": "^2.0.6"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.15.1",
