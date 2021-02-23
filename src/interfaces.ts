@@ -2,7 +2,7 @@ import "reflect-metadata";
 import { injectable } from "inversify";
 
 export interface IBook {
-    id: string;
+    _id?: string;
     title?: string;
     description?: string;
     authors?: string;
@@ -13,7 +13,7 @@ export interface IBook {
 
 @injectable()
 export abstract class IBooksRepository implements IBook {
-    id: string;
+    _id?: string;
     title?: string;
     description?: string;
     authors?: string;
@@ -22,15 +22,15 @@ export abstract class IBooksRepository implements IBook {
     fileName?: string;
 
     constructor(
-        id: string = "",
-        title?: string,
-        description?: string,
-        authors?: string,
-        favorite?: string,
-        fileCover?: string,
-        fileName?: string
+        _id: string = "",
+        title: string,
+        description: string,
+        authors: string,
+        favorite: string,
+        fileCover: string,
+        fileName: string
     ) {        
-        this.id = id;
+        this._id = _id;
         this.title = title;
         this.description = description;
         this.authors = authors;
@@ -39,10 +39,30 @@ export abstract class IBooksRepository implements IBook {
         this.fileName = fileName;
     }
     
-    abstract getBooks(): IBook[];
+    abstract getBooks(): Promise<IBook[]>;
     abstract createBook(_id: string, _title?: string, _description?: string, _authors?: string, _favorite?: string, _fileCover?: string, _fileName?: string): IBook;    
     abstract getBook(_id: string): IBook;
     abstract updateBook(_id: string, _title?: string, _description?: string, _authors?: string, _favorite?: string, _fileCover?: string, _fileName?: string): IBook;    
     abstract deleteBook(_id: string): IBook;
 }
 
+// [
+//     {
+//       "description": "Книга про супергероев",
+//       "authors": "Супергерои",
+//       "favorite": "yes",
+//       "fileCover": "http://placehold.it/200x300",
+//       "fileName": "superbook.txt",
+//       "_id": "60327f1d07cc172f7022bcc9",
+//       "title": "Суперкнига 7"
+//     },
+//     {
+//       "description": "Книга про супергероев11",
+//       "authors": "Супергерои",
+//       "favorite": "yes",
+//       "fileCover": "http://placehold.it/200x300",
+//       "fileName": "superbook.txt",
+//       "_id": "60327f2507cc172f7022bcca",
+//       "title": "Суперкнига 71"
+//     }
+//   ]

@@ -9,8 +9,8 @@ import { IBooksRepository } from '../../interfaces';
 
 const repo = container.get(IBooksRepository);
 
-router.get('/books/', (req, res) => {
-    const books = repo.getBooks();
+router.get('/books/', async (req, res) => {
+    const books = await repo.getBooks();
     res.json(books);
 });
 

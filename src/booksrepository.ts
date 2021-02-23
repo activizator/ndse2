@@ -7,7 +7,7 @@ import {IBook} from './interfaces';
 
 @injectable()
 export class BooksRepository implements IBook {
-    id: string;
+    _id?: string;
     title?: string;
     description?: string;
     authors?: string;
@@ -15,8 +15,8 @@ export class BooksRepository implements IBook {
     fileCover?: string;
     fileName?: string;
 
-    constructor(id: string = "", title?: string, description?: string, authors?: string, favorite?: string, fileCover?: string, fileName?: string) {
-        this.id = id;
+    constructor(_id: string = "", title?: string, description?: string, authors?: string, favorite?: string, fileCover?: string, fileName?: string) {
+        this._id = _id;
         this.title = title;
         this.description = description;
         this.authors = authors;
@@ -25,29 +25,32 @@ export class BooksRepository implements IBook {
         this.fileName = fileName;
     }
 
-    getBooks(): IBook[] {
-        return [{id: "123"},{id: "765"}];
+    async getBooks(): Promise<IBook[]> {
+        const books: IBook[] = await BookSchema.find().select('-__v');
+        return books;
     }
 
     createBook(_id: string, _title?: string, _description?: string, _authors?: string, _favorite?: string, _fileCover?: string, _fileName?: string): IBook {
-        this.id = _id;
+        this._id = _id;
         this.title = _title;
         this.description = _description;
         this.authors = _authors;
         this.favorite = _favorite;
         this.fileCover = _fileCover;
         this.fileName = _fileName;
-        const book = {id: this.id, title: this.title, description: this.description, authors: this.authors, favorite: this.favorite, fileCover: this.fileCover, fileName: this.fileName}
+        const book = {_id: this._id, title: this.title, description: this.description, authors: this.authors, favorite: this.favorite, fileCover: this.fileCover, fileName: this.fileName}
+
         return book;
     }
     
     getBook(_id: string): IBook {
-        this.id = _id;
-        return {id: this.id};
+        this._id = _id;
+
+        return {_id: this._id};
     }
 
     updateBook(_id: string, _title?: string, _description?: string, _authors?: string, _favorite?: string, _fileCover?: string, _fileName?: string): IBook {
-        this.id = _id;
+        this._id = _id;
         this.title = _title;
         this.description = _description;
         this.authors = _authors;
@@ -55,12 +58,13 @@ export class BooksRepository implements IBook {
         this.fileCover = _fileCover;
         this.fileName = _fileName;
 
-        return {id: this.id};
+        return {_id: this._id};
     }
     
     deleteBook(_id: string): IBook {
-        this.id = _id;
-        return {id: this.id};
+        this._id = _id;
+
+        return {_id: this._id};
     }
 }
 

@@ -1,6 +1,15 @@
-import { Schema, model } from 'mongoose';
+import mongoose, { Schema, Document } from 'mongoose';
 
-const bookSchema = new Schema({
+interface IBookSchema extends Document {
+    title?: string;
+    description?: string;
+    authors?: string;
+    favorite?: string;
+    fileCover?: string;
+    fileName?: string;
+  }
+
+const bookSchema: Schema = new Schema({
     title: {
         type: String, required: true
     },
@@ -21,4 +30,4 @@ const bookSchema = new Schema({
     }
 });
 
-export const BookSchema = model('Books', bookSchema);
+export const BookSchema = mongoose.model<IBookSchema>('Books', bookSchema);
