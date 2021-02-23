@@ -16,9 +16,9 @@ mongoose.set('useUnifiedTopology', true);
 
 const mongoUrl = `mongodb+srv://${process.env.MDBUSER}:${process.env.MDBPASS}@cluster0.0isj7.azure.mongodb.net/MyLibDB?retryWrites=true&w=majority`;
 
-const errorMiddleware = require('./middleware/error');
+import { errorMiddleware } from './middleware/error';
 
-const libApiRouter = require('./routes/api/library-router');
+import { libApiRouter } from './routes/api/library-router';
 
 const app = express();
 
