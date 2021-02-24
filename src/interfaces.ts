@@ -39,11 +39,11 @@ export abstract class IBooksRepository implements IBook {
         this.fileName = fileName;
     }
     
-    abstract getBooks(): Promise<IBook[]>;
-    abstract createBook(_id: string, _title?: string, _description?: string, _authors?: string, _favorite?: string, _fileCover?: string, _fileName?: string): IBook;    
-    abstract getBook(_id: string): IBook;
-    abstract updateBook(_id: string, _title?: string, _description?: string, _authors?: string, _favorite?: string, _fileCover?: string, _fileName?: string): IBook;    
-    abstract deleteBook(_id: string): IBook;
+    abstract getBooks(): Promise<IBook[] | null>;
+    abstract createBook(_id: string, _title?: string, _description?: string, _authors?: string, _favorite?: string, _fileCover?: string, _fileName?: string): Promise<IBook | null>;    
+    abstract getBook(_id: string): Promise<IBook | null>;
+    abstract updateBook(_id: string, _title?: string, _description?: string, _authors?: string, _favorite?: string, _fileCover?: string, _fileName?: string): Promise<IBook | null>;    
+    abstract deleteBook(_id: string): Promise<IBook | null>;
 }
 
 // [

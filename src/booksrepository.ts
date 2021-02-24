@@ -25,31 +25,31 @@ export class BooksRepository implements IBook {
         this.fileName = fileName;
     }
 
-    async getBooks(): Promise<IBook[]> {
+    async getBooks(): Promise<IBook[] | null> {
         const books: IBook[] = await BookSchema.find().select('-__v');
         return books;
     }
 
-    createBook(_id: string, _title?: string, _description?: string, _authors?: string, _favorite?: string, _fileCover?: string, _fileName?: string): IBook {
-        this._id = _id;
+    async createBook(_title?: string, _description?: string, _authors?: string, _favorite?: string, _fileCover?: string, _fileName?: string): Promise<IBook | null> {
         this.title = _title;
         this.description = _description;
         this.authors = _authors;
         this.favorite = _favorite;
         this.fileCover = _fileCover;
         this.fileName = _fileName;
-        const book = {_id: this._id, title: this.title, description: this.description, authors: this.authors, favorite: this.favorite, fileCover: this.fileCover, fileName: this.fileName}
-
+        const book = {title: this.title, description: this.description, authors: this.authors, favorite: this.favorite, fileCover: this.fileCover, fileName: this.fileName}
+        const newBook = new BookSchema(book);
+        await newBook.save();
         return book;
     }
     
-    getBook(_id: string): IBook {
+    async getBook(_id: string): Promise<IBook | null> {
         this._id = _id;
-
-        return {_id: this._id};
+        const book = await BookSchema.findById(this._id).select('-__v');
+        return book;
     }
 
-    updateBook(_id: string, _title?: string, _description?: string, _authors?: string, _favorite?: string, _fileCover?: string, _fileName?: string): IBook {
+    async updateBook(_id: string, _title?: string, _description?: string, _authors?: string, _favorite?: string, _fileCover?: string, _fileName?: string): Promise<IBook | null> {
         this._id = _id;
         this.title = _title;
         this.description = _description;
@@ -57,13 +57,19 @@ export class BooksRepository implements IBook {
         this.favorite = _favorite;
         this.fileCover = _fileCover;
         this.fileName = _fileName;
-
-        return {_id: this._id};
+        const updBook = await BookSchema.findByIdAndUpdate(this._id, { 
+            title: this.title, 
+            description: this.description, 
+            authors: this.authors, 
+            favorite: this.favorite, 
+            fileCover: this.fileCover, 
+            fileName: this.fileName }, { new: true });
+        return updBook;
     }
     
-    deleteBook(_id: string): IBook {
+    async deleteBook(_id: string): Promise<IBook | null> {
         this._id = _id;
-
+        await BookSchema.deleteOne({ _id: this._id });
         return {_id: this._id};
     }
 }
